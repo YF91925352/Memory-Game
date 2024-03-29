@@ -7,12 +7,13 @@ button {
   border: 2px solid #fff;
   padding: 6px 12px;
   border-radius: 4px;
-  color: #fff;
+  background: #fff;
+  color: #e0671b;
   font-weight: bold;
   cursor: pointer;
   font-size: 1em;
 }
 button:hover {
-  background: #c23866;
+  background: #5c8ada;
   color: #fff;
 }
