@@ -69,7 +69,7 @@ function App() {
         });
         resetTurns();
       } else {
-        resetTurns();
+        setTimeout(() => resetTurns(), 1000);
       }
     }
   }, [choiceone, choicetwo]);
