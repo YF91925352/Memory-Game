@@ -1,9 +1,9 @@
 import "./SingleCard.css";
-const SingleCard = ({ card, handleChoice, flipped }) => {
+const SingleCard = ({ card, handleChoice, flipped, disabled }) => {
   const handleClick = () => {
-    handleChoice(card);
+    !disabled && handleChoice(card);
   };
-  console.log(flipped);
+
   return (
     <div key={card.id} className="card">
       <div className={flipped ? "flipped" : ""}>

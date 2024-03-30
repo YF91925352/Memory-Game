@@ -4,23 +4,8 @@ import SingleCard from "./components/SingleCard";
 const cardImages = [
   { src: "/img/1.jpeg", matched: false },
   { src: "/img/2.jpeg", matched: false },
-  { src: "/img/3.jpeg", matched: false },
-  { src: "/img/4.jpeg", matched: false },
-  { src: "/img/5.jpeg", matched: false },
-  { src: "/img/6.jpeg", matched: false },
-  { src: "/img/7.jpeg", matched: false },
-  { src: "/img/8.jpeg", matched: false },
-  { src: "/img/9.jpeg", matched: false },
-  { src: "/img/10.jpeg", matched: false },
-  { src: "/img/11.jpeg", matched: false },
-  { src: "/img/12.jpeg", matched: false },
-  { src: "/img/13.jpeg", matched: false },
-  { src: "/img/14.jpeg", matched: false },
-  { src: "/img/15.jpeg", matched: false },
-  { src: "/img/16.jpeg", matched: false },
-  { src: "/img/17.jpeg", matched: false },
-  { src: "/img/18.jpeg", matched: false },
-  { src: "/img/19.jpeg", matched: false },
+];
+/* { src: "/img/19.jpeg", matched: false },
   { src: "/img/20.jpeg", matched: false },
   { src: "/img/21.jpeg", matched: false },
   { src: "/img/22.jpeg", matched: false },
@@ -33,13 +18,33 @@ const cardImages = [
   { src: "/img/29.jpeg", matched: false },
   { src: "/img/30.jpeg", matched: false },
   { src: "/img/31.jpeg", matched: false },
-  { src: "/img/32.jpeg", matched: false },
-];
+  { src: "/img/32.jpeg", matched: false }, */
 function App() {
+  const [win, setWin] = useState(false);
+  const [time, setTime] = useState({ minutes: 0, seconds: 0 });
+  const [timer, setTimer] = useState(null);
   const [cards, setCards] = useState([]);
   const [turns, setTurns] = useState(0);
+  const [disabled, setDisabled] = useState(false);
   const [choiceone, setChoiceone] = useState(null);
   const [choicetwo, setChoicetwo] = useState(null);
+  //timer
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTime((prevTime) => {
+        const newSeconds = prevTime.seconds + 1;
+        const newMinutes = prevTime.minutes + Math.floor(newSeconds / 60);
+        return { minutes: newMinutes, seconds: newSeconds % 60 };
+      });
+    }, 1000);
+    setTimer(interval);
+    return () => clearInterval(interval);
+  }, [timer]);
+
+  useEffect(() => {
+    win && clearInterval(timer);
+  }, [timer, win]);
+
   //shuffle card
   const shuffleCards = () => {
     const shuffledCards = [...cardImages, ...cardImages]
@@ -47,8 +52,15 @@ function App() {
       .map((card) => ({ ...card, id: Math.random() }));
 
     setCards(shuffledCards);
+    setChoiceone(null);
+    setChoicetwo(null);
     setTurns(0);
+    setTime({ minutes: 0, seconds: 0 });
   };
+  //start a game auto
+  useEffect(() => {
+    shuffleCards();
+  }, []);
   //handle a choice
   const handleChoice = (card) => {
     choiceone ? setChoicetwo(card) : setChoiceone(card);
@@ -57,6 +69,7 @@ function App() {
   //compare 2 selected cards
   useEffect(() => {
     if (choicetwo && choiceone) {
+      setDisabled(true);
       if (choiceone.src === choicetwo.src) {
         setCards((prevCards) => {
           return prevCards.map((card) => {
@@ -69,27 +82,43 @@ function App() {
         });
         resetTurns();
       } else {
-        setTimeout(() => resetTurns(), 1000);
+        setTimeout(() => resetTurns(), 2000);
       }
     }
   }, [choiceone, choicetwo]);
-  console.log(cards);
+  //handle win
+  useEffect(() => {
+    setWin(cards.every((card) => card.matched === true));
+  }, [cards]);
+
   //reset & increase turns
   const resetTurns = () => {
     setChoiceone(null);
     setChoicetwo(null);
     setTurns((prevTurns) => prevTurns + 1);
+    setDisabled(false);
   };
+
   return (
     <div className="App">
-      <h1>Spongebob Match</h1>
-      <button onClick={shuffleCards}>New Game</button>
+      <h1>Spongebob Magic Match</h1>
+      {win && <p>Congratulation</p>}
+      <div>
+        <button onClick={shuffleCards}>New Game</button>
+      </div>
+
+      <p>Turns : {turns}</p>
+      <p>
+        Timer: {time.minutes.toString().padStart(2, "0")}:
+        {time.seconds.toString().padStart(2, "0")}
+      </p>
       <div className="card-grid">
         {cards.map((card) => (
           <SingleCard
             card={card}
             key={card.id}
             handleChoice={handleChoice}
+            disabled={disabled}
             flipped={card === choiceone || card === choicetwo || card.matched}
           />
         ))}
