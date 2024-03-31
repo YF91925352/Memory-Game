@@ -39,7 +39,7 @@ const cardImages = [
 function App() {
   const [win, setWin] = useState(false);
   const [time, setTime] = useState({ minutes: 0, seconds: 0 });
-  const [timer, setTimer] = useState(null);
+
   const [cards, setCards] = useState([]);
   const [turns, setTurns] = useState(0);
   const [disabled, setDisabled] = useState(false);
@@ -54,13 +54,9 @@ function App() {
         return { minutes: newMinutes, seconds: newSeconds % 60 };
       });
     }, 1000);
-    setTimer(interval);
+    win && clearInterval(interval);
     return () => clearInterval(interval);
-  }, [timer]);
-
-  useEffect(() => {
-    win && clearInterval(timer);
-  }, [timer, win]);
+  }, [win]);
 
   //shuffle card
   const shuffleCards = () => {
@@ -73,6 +69,7 @@ function App() {
     setChoicetwo(null);
     setTurns(0);
     setTime({ minutes: 0, seconds: 0 });
+    setWin(false);
   };
   //start a game auto
   useEffect(() => {
