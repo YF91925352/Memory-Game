@@ -1,4 +1,7 @@
 # Spongebob Crazy Match!
+
+[PLAY NOW!](https://spongebob-memory-match.vercel.app/)
+
 ![ScreenRecording2024-04-01at17 05 07-ezgif com-video-to-gif-converter](https://github.com/YF91925352/Memory-Game/assets/113684176/db27315d-3760-436f-9505-1d3d7716da8d)
 
 Welcome to Spongebob Crazy Match, an exciting memory card game featuring your favorite underwater characters from Bikini Bottom! Dive into the depths of fun and challenge your memory skills with Spongebob, Patrick, Squidward, and more!
