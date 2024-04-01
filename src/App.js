@@ -2,6 +2,22 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import SingleCard from "./components/SingleCard";
 const cardImages = [
+  { src: "/img/1.jpeg", matched: false },
+  { src: "/img/2.jpeg", matched: false },
+  { src: "/img/3.jpeg", matched: false },
+  { src: "/img/4.jpeg", matched: false },
+  { src: "/img/5.jpeg", matched: false },
+  { src: "/img/6.jpeg", matched: false },
+  { src: "/img/7.jpeg", matched: false },
+  { src: "/img/8.jpeg", matched: false },
+  { src: "/img/9.jpeg", matched: false },
+  { src: "/img/10.jpeg", matched: false },
+  { src: "/img/11.jpeg", matched: false },
+  { src: "/img/12.jpeg", matched: false },
+  { src: "/img/13.jpeg", matched: false },
+  { src: "/img/14.jpeg", matched: false },
+  { src: "/img/15.jpeg", matched: false },
+  { src: "/img/16.jpeg", matched: false },
   { src: "/img/17.jpeg", matched: false },
   { src: "/img/18.jpeg", matched: false },
 ];
@@ -96,7 +112,7 @@ function App() {
         });
         resetTurns();
       } else {
-        setTimeout(() => resetTurns(), 2000);
+        setTimeout(() => resetTurns(), 1500);
       }
     }
   }, [choiceone, choicetwo]);
@@ -115,17 +131,27 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Spongebob Magic Match</h1>
-      {win && <p>Congratulation</p>}
-      <div>
-        <button onClick={shuffleCards}>New Game</button>
+      <div className="title">
+        {win ? (
+          <img alt="cheers" src="/img/Congratulations.png" />
+        ) : (
+          <img alt="title" src="/img/Spongebob Crazy Match.png" />
+        )}
       </div>
 
-      <p>Turns : {turns}</p>
-      <p>
-        Timer: {time.minutes.toString().padStart(2, "0")}:
-        {time.seconds.toString().padStart(2, "0")}
-      </p>
+      <div>
+        <button onClick={shuffleCards}>
+          <img alt="title" src="/img/newgame.png" />
+        </button>
+      </div>
+      <div className="score">
+        <p>Turns : {turns}</p>
+        <p>
+          Timer: {time.minutes.toString().padStart(2, "0")}:
+          {time.seconds.toString().padStart(2, "0")}
+        </p>
+      </div>
+
       <div className="card-grid">
         {cards.map((card) => (
           <SingleCard

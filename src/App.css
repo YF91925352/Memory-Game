@@ -1,21 +1,43 @@
-.App {
-  max-width: 1360px;
-  margin: 40px auto;
+#root {
+  overflow-x: hidden;
+  background-image: url("../public/img/bg.jpg");
+  background-size: contain;
+  background-position: center;
+
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
 }
+.title {
+  display: flex;
+  justify-content: center;
+}
+.score {
+  display: flex;
+  gap: 5rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 2em;
+  margin-top: 2rem;
+}
+
 button {
   background: none;
   border: 2px solid #fff;
-  padding: 6px 12px;
+
   border-radius: 4px;
-  background: #fff;
-  color: #e0671b;
+  background: #e59494;
+  color: #f5f2f0;
   font-weight: bold;
   cursor: pointer;
-  font-size: 1em;
+
+  margin-top: 2rem;
 }
 button:hover {
-  background: #5c8ada;
-  color: #fff;
+  background: #f5eaf0;
+  color: #ec4593;
 }
 .card-grid {
   margin-top: 40px;
